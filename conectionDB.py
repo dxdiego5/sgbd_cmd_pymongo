@@ -1,7 +1,7 @@
 import pymongo
 from pymongo.errors import ConnectionFailure
 
-
+# class private connection database
 class ConnectionMongoDB():
     def __init__(self):
         try:
