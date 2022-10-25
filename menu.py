@@ -1,6 +1,6 @@
 from pprint import pprint
 import funcMongoDB
-from functions import cleanup_cmd, list_collections_of_db
+from functions import cleanup_cmd, menu_list_collections_of_db
 from time import sleep
 
 
@@ -51,7 +51,7 @@ def menu_list_data():
     elif option in name_dbs:
         # if dbname selected true
         dbname = option
-        response_info = list_collections_of_db(dbname)
+        response_info = menu_list_collections_of_db(dbname)
         if response_info == '1':
             return menu_list_data()
     else:

@@ -1,9 +1,6 @@
 import os
 import funcMongoDB
 from time import sleep
-from pprint import pprint
-
-
 
 # intro start aplicattion build
 def intro_prsentation():
@@ -54,8 +51,8 @@ def close_app():
 
     return False
 
-
-def list_collections_of_db(dbname):
+# List databases and collections 
+def menu_list_collections_of_db(dbname):
 
     cleanup_cmd()
 
@@ -101,7 +98,6 @@ def list_collections_of_db(dbname):
         # return menu principal
         return
 
-
 # new document
 def menu_create_document(dbname):
 
@@ -122,7 +118,7 @@ def menu_create_document(dbname):
 
         if option.lower() == 's':
             collection_selected_condition = True
-            return list_collections_of_db(dbname)
+            return menu_list_collections_of_db(dbname)
 
         collection = option 
         if collection in funcMongoDB.list_collections_db(dbname):
@@ -150,7 +146,7 @@ def menu_create_document(dbname):
 
                 if option == '1':
                     end_create = True
-                    list_collections_of_db(dbname)
+                    menu_list_collections_of_db(dbname)
                 elif option == '2':
                     end_create = True
 
@@ -166,13 +162,7 @@ def menu_create_document(dbname):
                     print(f'Retornando ao MENU  {i} \U0000231B segundos')
                     sleep(1)
 
-                list_collections_of_db(dbname)
-
-
-
-
-
-
+                menu_list_collections_of_db(dbname)
 
 # delete database
 def menu_delete_base(dbname):
@@ -202,7 +192,7 @@ def menu_delete_base(dbname):
         
         elif option.lower() == 'n': 
             delete_base_condition = True
-            return list_collections_of_db(dbname)
+            return menu_list_collections_of_db(dbname)
 
 # create collection
 def menu_crate_collection(dbname):
@@ -221,8 +211,15 @@ def menu_crate_collection(dbname):
     else:
         collection = option
         funcMongoDB.create_collection_and_database(dbname, collection)
+        for i in range(5,0,-1):
+            cleanup_cmd()
+            print(16*'-', 'MongoDOS', 16*'-', '\n')
+            print(f'A COLEÇÃO "{collection}" foi CRIADO com SUCESSO \U00002705 \n')
+            print(16*'-', 'MongoDOS', 16*'-', '\n')
+            print(f'Retornando ao MENU  {i} \U0000231B segundos')
+            sleep(1)
 
-    list_collections_of_db(dbname)  
+    menu_list_collections_of_db(dbname)  
 
 # delete collection
 def menu_delete_collection(dbname):
@@ -242,7 +239,7 @@ def menu_delete_collection(dbname):
 
         if option.lower() == 's':
             select_colection_condition = True
-            return list_collections_of_db(dbname)
+            return menu_list_collections_of_db(dbname)
         
         else:
             collection = option
