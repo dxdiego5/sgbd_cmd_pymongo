@@ -3,7 +3,6 @@ import funcMongoDB
 from functions import cleanup_cmd, menu_list_collections_of_db
 from time import sleep
 
-
 def main_principal():
 
     cleanup_cmd()
@@ -14,7 +13,9 @@ def main_principal():
     print(16*'-', 'MongoDOS', 16*'-', '\n')
     print('[ 1 ] \U00002B05  Novo banco de dados:')
     print('[ 2 ] \U00002B05  Mais opções:')
-    print('[ 0 ] \U00002B05  Encerar aplicação: \n')
+    print('[ 0 ] \U00002B05  Encerar aplicação:')
+    print('\n')
+    print('Version 1.0')
     print(16*'-', 'MongoDOS', 16*'-','\n')
     print('Escolha uma das opções acima (\U0001F446):\n')
     option_menu = input('Digite aqui (\U0001F449):')
@@ -25,7 +26,6 @@ def main_principal():
         return main_principal()
     else:
         return int(option_menu)
-
 
 # submenu more options
 def menu_list_data():
@@ -56,7 +56,6 @@ def menu_list_data():
             return menu_list_data()
     else:
         return menu_list_data()
-
 
 def create_database():
 
