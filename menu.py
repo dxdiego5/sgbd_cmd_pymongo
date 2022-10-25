@@ -8,26 +8,16 @@ def main_principal():
     cleanup_cmd()
 
     options = ['0', '1', '2']
+        
+    cleanup_cmd()
+    print(16*'-', 'MongoDOS', 16*'-', '\n')
+    print('[ 1 ] \U0001F448 Criar banco de dados:')
+    print('[ 2 ] \U0001F448 Mais opções:','\n')
+    print('[ 0 ] \U0001F448 Encerar aplicação:' ,'\n')
+    print(16*'-', 'MongoDOS', 16*'-','\n')
 
-    # print(45*'-')
-    # print('Olá meu nome é Mongo_Dos \U0001f600 !')
-    # time.sleep(2)
-    # print('O meu criador é o Diego Felip da Silva Bez')
-    # time.sleep(3)
-    # print('ele dedicou o seu tempo para me criar então fassa bom proveito!')
-    # time.sleep(3)
-    # print('A aplicação iniciará em 5 segundo aguarde ...')
-    # print(45*'-')
-    # time.sleep(5)
-    # cleanup_cmd()
+    option_menu = input(f'Digite aqui uma das opções \U0001F446:\n')
 
-    print(45*'-', '\n')
-    print('[ 1 ] <- Criar banco de dados:')
-    print('[ 2 ] <- Mais opções: ')
-    print('[ 0 ] <- Encerar aplicação: \n')
-    print(45*'-')
-
-    option_menu = input('Digite aqui uma das opções acima:  ')
 
     # valid menu options selected
     if option_menu not in options:

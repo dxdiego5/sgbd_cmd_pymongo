@@ -1,7 +1,10 @@
-from functions import close_app
+from functions import close_app, intro_prsentation
 import menu
 
 app_build = True
+
+
+# intro_prsentation()
 
 while app_build == True:
 

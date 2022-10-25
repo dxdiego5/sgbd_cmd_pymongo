@@ -33,6 +33,21 @@ def create_document(dbname, collection, info):
     )
     return
 
+
+def list_all_document(dbname, collection, limit=0):
+    data = connection_db[dbname]
+    return data[collection].find({}).limit(limit)
+
+
+def filtered_document(dbname, collection, key, value, limit=0):
+    data = connection_db[dbname]
+    info = data[collection].find(
+            {
+                key:{"$eq": value}
+            }
+        ).limit(limit)
+    return info
+
 def delete_document(dbname, collection, key, value):
     data = connection_db[dbname]
     data[collection].delete_many(
