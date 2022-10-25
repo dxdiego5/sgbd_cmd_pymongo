@@ -1,3 +1,4 @@
+import pymongo
 from conectionDB import ConnectionMongoDB
 
 connection_db = ConnectionMongoDB().get_connection()
@@ -52,9 +53,9 @@ def filtered_document(dbname, collection, key, value, limit=0):
 
 def delete_document(dbname, collection, key, value):
     data = connection_db[dbname]
-    data[collection].delete_many(
-        {
-            key: {"$eq": value}
-        }
-    )
-    return
+    try:
+        data[collection].delete_many({key: {"$eq": value}})
+        return 'DOCUMENTOS DELETADOS COM SUCESSO'
+    except:
+        return 'Dados para DELEÇÃO podem estar incorretos'
+

@@ -1,4 +1,6 @@
 import os
+import pprint
+from tkinter import E
 import funcMongoDB
 from time import sleep
 
@@ -87,8 +89,8 @@ def menu_list_collections_of_db(dbname):
         menu_create_document(dbname)
 
     elif option == '4':
-        # REMOVER documento
-        pass
+        menu_delete_document(dbname)
+        
     elif option == '5':
         # BUSCAR documento
         pass
@@ -97,6 +99,80 @@ def menu_list_collections_of_db(dbname):
     else:
         # return menu principal
         return
+
+
+# delete document
+def menu_delete_document(dbname):
+
+    select_colection_valid = False
+    while select_colection_valid == False:
+        cleanup_cmd()
+
+        print(16*'-', 'MongoDOS', 16*'-', '\n')
+        print( f'O BANCO é: "{dbname.upper()}", tem as seguintes COLEÇÕES abaixo (\U0001F447):\n')
+
+        print(funcMongoDB.list_collections_db(dbname))
+
+        print('\n')
+        print(16*'-', 'MongoDOS', 16*'-', '\n')
+        print('\n')
+
+        print('Informe o NOME da COLEÇÃO que deseja ACESSAR para DELETAR algum DOCUMENTO OU digite a letra "S" para voltar ao MENU: \n')
+        option = input('Digite aqui (\U0001F449):')
+           
+
+        if option.lower() == 's':
+            select_colection_valid = True
+            return menu_list_collections_of_db(dbname)
+        
+        elif option in funcMongoDB.list_collections_db(dbname):
+            collection = option
+            cleanup_cmd()
+            print(16*'-', 'MongoDOS', 16*'-', '\n')
+            print(f'O BANCO é: "{dbname.upper()}", a COLEÇÃO selecionada é "{collection.upper()}"\n \nfiltre os DOCUMENTOS que deseja DELETAR por CHAVE e VALOR conforme abaxio (\U0001F447)')
+            print('\n')
+            print(16*'-', 'MongoDOS', 16*'-')
+            print('\n')
+
+            key = input(f'Digite aqui (\U0001F449) a CHAVE: ')
+            print('\n')
+
+            value = input(f'Digite aqui (\U0001F449) o VALOR: ')
+            print('\n')
+
+
+            doc_condition_delete = False
+            while doc_condition_delete == False:
+                cleanup_cmd()
+                print(16*'-', 'MongoDOS', 16*'-', '\n')
+
+                print(f'A CHAVE que deseja FILTRAR é: "{key}": ')
+                print(f'O VALOR que deseja FILTRAR é: "{value}": ')
+                print('\n')
+                print(16*'-', 'MongoDOS', 16*'-', '\n')
+                
+                option = input('Inform a letra "S" para CONFIRMAR A EXCLUSÃO OU a letra "N" para CANCELAR e voltar ao MENU anterior:')
+                
+                if option.lower() == 'n':
+                    doc_condition_delete = True
+
+                elif option.lower() == 's':
+                    doc_condition_delete = True
+                    info = funcMongoDB.delete_document(dbname, collection, key, value)
+
+                    for i in range(5,0,-1):
+                        cleanup_cmd()
+                        print(16*'-', 'MongoDOS', 16*'-', '\n')
+                        print(info ,' \U00002705 \n')
+                        print(16*'-', 'MongoDOS', 16*'-', '\n')
+                        print(f'Retornando ao MENU  anterior {i} \U0000231B segundos')
+                        sleep(1)
+
+
+            return menu_list_collections_of_db(dbname)
+        else: 
+            pass
+
 
 # new document
 def menu_create_document(dbname):

@@ -8,7 +8,7 @@ app_build = True
 
 while app_build == True:
 
-    # call function list menu
+    # call function main menu
     option_menu = menu.main_principal()
 
     # close application
