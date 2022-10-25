@@ -78,17 +78,17 @@ def list_collections_of_db(dbname):
     option = input('Digite aqui (\U0001F449):')
 
     if option.lower() == 's':
-        return '1'
+        return 
 
     elif option == '1':
-        # NOVA coleção
-        pass
+        menu_crate_collection(dbname)
+    
     elif option == '2':
-        delete_collection(dbname)
+        menu_delete_collection(dbname)
         
     elif option == '3':
-        # NOVO documento
-        pass
+        menu_create_document(dbname)
+
     elif option == '4':
         # REMOVER documento
         pass
@@ -100,6 +100,79 @@ def list_collections_of_db(dbname):
     else:
         # return menu principal
         return
+
+
+# new document
+def menu_create_document(dbname):
+
+    collection_selected_condition = False
+    while collection_selected_condition == False:
+
+        cleanup_cmd()
+        print(16*'-', 'MongoDOS', 16*'-', '\n')
+        print(f'O BANCO de dados selecionado é: "{dbname.upper()}", segue abaixo (\U0001F447) as COLEÇÕES disponíveis:')
+
+        print('\n')
+        print(funcMongoDB.list_collections_db(dbname))
+        print('\n')
+        print(16*'-', 'MongoDOS', 16*'-', '\n')
+
+        print('Informe qual o NOME da COLEÇÃO que deseja adicionar um NOVO DOCUMENTO OU digite a letra "S" para voltar ao MENU anterior: \n')
+        option = input('Digite aqui (\U0001F449):')
+
+        if option.lower() == 's':
+            collection_selected_condition = True
+            return list_collections_of_db(dbname)
+
+        collection = option 
+        if collection in funcMongoDB.list_collections_db(dbname):
+            data = {}
+            end_create = False
+            index = 1
+            while end_create == False:
+                cleanup_cmd()
+                print(16*'-', 'MongoDOS', 16*'-', '\n')
+                print( f'O BANCO de dados é: "{dbname.upper()}", a COLEÇÃO é: "{collection.upper()}" \n')
+                print(16*'-', 'MongoDOS', 16*'-', '\n')
+
+                key = input(f'Informe a CHAVE NUMERO "{index}" aqui: ')
+                value = input(f'Informe o VALOR NUMERO "{index}" VALOR aqui: ')
+                
+                print('\n')
+
+                print('[ 1 ] \U00002B05  SAIR e NÃO SALVAR: \n')
+                print('[ 2 ] \U00002B05  SALVAR e SAIR: \n')
+                print('[ ENTER ] \U00002B05  Precione QUALQUER TECLA (exeto 1 e 2 ja tem FUNÇÕES ESPECIAIS) para CONTINUAR CADASTRANDO chaves e valores no mesmo DOCUMENTO: \n')
+
+                option = input('Digite aqui (\U0001F449):')
+
+                data[key] = value
+
+                if option == '1':
+                    end_create = True
+                    list_collections_of_db(dbname)
+                elif option == '2':
+                    end_create = True
+
+                index += 1
+
+            if len(data) > 0 and option == '2' and end_create == True:
+                funcMongoDB.create_document(dbname, collection, data)
+                for i in range(5,0,-1):
+                    cleanup_cmd()
+                    print(16*'-', 'MongoDOS', 16*'-', '\n')
+                    print(f'O DOCUMENTO foi CRIADO com SUCESSO \U00002705 \n')
+                    print(16*'-', 'MongoDOS', 16*'-', '\n')
+                    print(f'Retornando ao MENU  {i} \U0000231B segundos')
+                    sleep(1)
+
+                list_collections_of_db(dbname)
+
+
+
+
+
+
 
 # delete database
 def menu_delete_base(dbname):
@@ -131,7 +204,28 @@ def menu_delete_base(dbname):
             delete_base_condition = True
             return list_collections_of_db(dbname)
 
-def delete_collection(dbname):
+# create collection
+def menu_crate_collection(dbname):
+    
+    cleanup_cmd()
+
+    print(16*'-', 'MongoDOS', 16*'-', '\n')
+    print(f'O BANCO de dados selecionado é: "{dbname.upper()}": \n')
+    print(16*'-', 'MongoDOS', 16*'-', '\n')
+
+    print('Informe um NOME pra criar uma NOVA COLEÇÃO OU digite a letra "S" para voltar ao MENU anterior:: \n')
+    option = input('Digite aqui (\U0001F449):')
+
+    if option.lower() == 's':
+        pass 
+    else:
+        collection = option
+        funcMongoDB.create_collection_and_database(dbname, collection)
+
+    list_collections_of_db(dbname)  
+
+# delete collection
+def menu_delete_collection(dbname):
     select_colection_condition = False
     while select_colection_condition == False:
         cleanup_cmd()
