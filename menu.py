@@ -1,6 +1,7 @@
+from pprint import pprint
 import funcMongoDB
 from functions import cleanup_cmd, list_collections_of_db
-import time
+from time import sleep
 
 
 def main_principal():
@@ -11,12 +12,12 @@ def main_principal():
         
     cleanup_cmd()
     print(16*'-', 'MongoDOS', 16*'-', '\n')
-    print('[ 1 ] \U0001F448 Criar banco de dados:')
-    print('[ 2 ] \U0001F448 Mais opções:','\n')
-    print('[ 0 ] \U0001F448 Encerar aplicação:' ,'\n')
+    print('[ 1 ] \U00002B05  Novo banco de dados:')
+    print('[ 2 ] \U00002B05  Mais opções:')
+    print('[ 0 ] \U00002B05  Encerar aplicação: \n')
     print(16*'-', 'MongoDOS', 16*'-','\n')
-
-    option_menu = input(f'Digite aqui uma das opções \U0001F446:\n')
+    print('Escolha uma das opções acima (\U0001F446):\n')
+    option_menu = input('Digite aqui (\U0001F449):')
 
 
     # valid menu options selected
@@ -26,60 +27,70 @@ def main_principal():
         return int(option_menu)
 
 
-# submenu options
+# submenu more options
 def menu_list_data():
 
     cleanup_cmd()
 
     name_dbs = funcMongoDB.list_databases()
 
-    print(45*'-')
-    print('Banco de dados disponíveis: \n')
+    print(16*'-', 'MongoDOS', 16*'-', '\n')
+    print('Lista de BANCO de dados disponíveis abaixo (\U0001F447): \n')
+    pprint(name_dbs)
+    print('\n')
+    print(16*'-', 'MongoDOS', 16*'-', '\n')
 
-    print(funcMongoDB.list_databases())
 
-    print('[ 1 ] <- Voltar ao menu prncipal: ')
-    print(45*'-')
-    print('\n******** Digite o nome do banco acima que vc deseje ver as collections: \n')
-    db_name = input('Digite aqui:')
+    print('Informe o NOME do banco que deseja ACESSAR OU digite a letra "S" para voltar ao MENU principal: \n')
+    option = input('Digite aqui (\U0001F449):')
 
-    if db_name != '1':
-        if db_name in name_dbs:
-            response_info = list_collections_of_db(db_name)
-            if response_info == '1':
-                return menu_list_data()
-        else:
+    if option.lower() == 's':
+        return
+
+
+    elif option in name_dbs:
+        # if dbname selected true
+        dbname = option
+        response_info = list_collections_of_db(dbname)
+        if response_info == '1':
             return menu_list_data()
+    else:
+        return menu_list_data()
 
 
 def create_database():
+
     cleanup_cmd()
 
-    print(45*'-', '\n')
-    print('[ 1 ] <- Voltar ao menu prncipal:')
-    print('[ ENTER ] <- Criar o banco de dados: :\n')
-    print(45*'-')
+    db_valid = False
+    msg_error = ''
+    while db_valid == False:
+        cleanup_cmd()
+        print(16*'-', 'MongoDOS', 16*'-', '\n')
 
-    option = input('Digite aqui: ')
+        if len(msg_error) > 0:
+            print(f'\U00002757 {msg_error} \U00002757 \n \n')
 
-    if option == '1':
-        return '1'
-    else:
-        bd_valid = False
-        msg_error = ''
-        while bd_valid == False:
-            cleanup_cmd()
-            print(msg_error)
-            print('\n')
-            dbname = input('Qual nome do banco que deseja criar: ')
+        print('Digite nome do BANCO que deseja criar OU digite a letra "S" para voltar ao MENU principal: \n')
+        print(16*'-', 'MongoDOS', 16*'-', '\n')
 
+        option_menu = input('Digite aqui (\U0001F449):')
+
+        if option_menu.lower() == 's':
+            return '1'
+        else:
+            dbname = option_menu
             if dbname in funcMongoDB.list_databases() or dbname.count(' ') > 0:
-                msg_error = f'Banco de dados "{dbname}" ja existe ou contem caracter inválidos como o espaços, tente outro nome! \n'
+                msg_error = f'Banco de dados "{dbname}" ja existe ou contém carácter inválidos, tente outro nome'
             else:
+                # if dbname for valid create a new database
                 funcMongoDB.create_collection_and_database(dbname)
 
-                cleanup_cmd()
-                print('\n')
-                print(f'Banco de dados "{dbname}" criado com sucesso!')
-                time.sleep(2)
-                bd_valid = True
+                for i in range(5,0,-1):
+                    cleanup_cmd()
+                    print(16*'-', 'MongoDOS', 16*'-', '\n')
+                    print(f'BANCO de dados "{dbname}" criado com SUCESSO \U00002705 \n')
+                    print(16*'-', 'MongoDOS', 16*'-', '\n')
+                    print(f'Retornando ao MENU em {i} \U0000231B segundos')
+                    sleep(1)
+                db_valid = True

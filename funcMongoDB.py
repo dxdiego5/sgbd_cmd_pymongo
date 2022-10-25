@@ -16,6 +16,8 @@ def delete_collection(dbname, collection):
     data[collection].drop()
     return
 
+def delete_database(dbname):
+    return connection_db.drop_database(dbname)
 
 def create_collection_and_database(dbname, collection='test'):
     data = connection_db[dbname]
