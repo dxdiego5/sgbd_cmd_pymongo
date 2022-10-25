@@ -1,6 +1,6 @@
-import pymongo
 from conectionDB import ConnectionMongoDB
 
+# get drive connection database private class attribute
 connection_db = ConnectionMongoDB().get_connection()
 
 # list all databases mongo registreds array data
@@ -36,11 +36,9 @@ def create_document(dbname, collection, info):
     )
     return
 
-
 def list_all_document(dbname, collection, limit=0):
     data = connection_db[dbname]
     return data[collection].find({}).limit(limit)
-
 
 def filtered_document(dbname, collection, key, value, limit=0):
     data = connection_db[dbname]
@@ -57,5 +55,5 @@ def delete_document(dbname, collection, key, value):
         data[collection].delete_many({key: {"$eq": value}})
         return 'DOCUMENTOS DELETADOS COM SUCESSO'
     except:
-        return 'Dados para DELEÇÃO podem estar incorretos'
+        return 'DADOS PARA DELEÇÃO PODEM ESTAR INCORRETOS'
 
