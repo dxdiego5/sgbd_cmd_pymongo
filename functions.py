@@ -2,22 +2,21 @@ import os
 import funcMongoDB
 from time import sleep
 
+
 # intro start aplicattion build
 def intro_prsentation():
     print(16*'-', 'MongoDOS', 16*'-', '\n')
     print('Olá meu nome é Mongo DOS \U0001f600 !')
-    sleep(2)
-    print('O meu criador é o Diego Felip da Silva Bez')
-    sleep(3)
+    sleep(1)
+    print('O meu desenvolvedor é Diego Felipe da Silva Bez')
+    sleep(1)
     print('ele dedicou o seu tempo para me criar então faça bom proveito!')
-    sleep(4)
+    sleep(1)
+
     print('\n', 16*'-', 'MongoDOS', 16*'-', '\n')
-    for time_start_app in range(5, 0, -1):
-        cleanup_cmd()
-        print(16*'-', 'MongoDOS', 16*'-', '\n')
+    for time_start_app in range(6, 0, -1):
         print(
-            f'Aplicação iniciará em {time_start_app} \U0000231B segundo aguarde ... \n')
-        print(16*'-', 'MongoDOS', 16*'-', '\n')
+            f'LOG ALERT: Aplicação iniciará em {time_start_app} \U0000231B segundo aguarde ...')
         sleep(1)
 
 # clean a cmd comand line
@@ -56,50 +55,53 @@ def close_app():
 def menu_list_collections_of_db(dbname):
 
     cleanup_cmd()
+    if dbname in funcMongoDB.list_databases():
+        print(16*'-', 'MongoDOS', 16*'-', '\n')
+        print(
+            f'O BANCO de dados "{dbname.upper()}", tem as seguintes COLEÇÕES abaixo (\U0001F447):')
 
-    print(16*'-', 'MongoDOS', 16*'-', '\n')
-    print(
-        f'O BANCO de dados "{dbname.upper()}", tem as seguintes COLEÇÕES abaixo (\U0001F447):')
+        print('\n')
+        print(funcMongoDB.list_collections_db(dbname))
+        print('\n')
 
-    print('\n')
-    print(funcMongoDB.list_collections_db(dbname))
-    print('\n')
+        print('Escolha uma das OPÇÕES abaixo (\U0001F447), OU digite "S" para voltar ao MENU PRINCIPAL: \n')
+        print('[ 1 ] \U00002B05  \U0001F4BE NOVA coleção:\n')
+        print('[ 2 ] \U00002B05  \U00002757 REMOVER coleção:\n')
+        print('[ 3 ] \U00002B05  \U0001F4BE NOVO documento:\n')
+        print('[ 4 ] \U00002B05  \U00002757 REMOVER documento:\n')
+        print('[ 5 ] \U00002B05  \U0001F50E BUSCAR documento:\n')
+        print(
+            f'[ 6 ] \U00002B05  \U00002757 DELETAR o BANCO (\U0001F449) "{dbname.upper()}": \n')
+        print(16*'-', 'MongoDOS', 16*'-', '\n')
 
-    print('Escolha uma das OPÇÕES abaixo (\U0001F447), OU digite "S" para voltar ao MENU PRINCIPAL: \n')
-    print('[ 1 ] \U00002B05  \U0001F4BE NOVA coleção:\n')
-    print('[ 2 ] \U00002B05  \U00002757 REMOVER coleção:\n')
-    print('[ 3 ] \U00002B05  \U0001F4BE NOVO documento:\n')
-    print('[ 4 ] \U00002B05  \U00002757 REMOVER documento:\n')
-    print('[ 5 ] \U00002B05  \U0001F50E BUSCAR documento:\n')
-    print(
-        f'[ 6 ] \U00002B05  \U00002757 DELETAR o BANCO (\U0001F449) "{dbname.upper()}": \n')
-    print(16*'-', 'MongoDOS', 16*'-', '\n')
+        option = input('Digite aqui (\U0001F449):')
 
-    option = input('Digite aqui (\U0001F449):')
+        if option.lower() == 's':
+            return
 
-    if option.lower() == 's':
-        return
+        elif option == '1':
+            menu_crate_collection(dbname)
 
-    elif option == '1':
-        menu_crate_collection(dbname)
+        elif option == '2':
+            menu_delete_collection(dbname)
 
-    elif option == '2':
-        menu_delete_collection(dbname)
+        elif option == '3':
+            menu_create_document(dbname)
 
-    elif option == '3':
-        menu_create_document(dbname)
+        elif option == '4':
+            menu_delete_document(dbname)
 
-    elif option == '4':
-        menu_delete_document(dbname)
+        elif option == '5':
+            menu_find_document(dbname)
 
-    elif option == '5':
-        menu_find_document(dbname)
+        elif option == '6':
+            menu_delete_base(dbname)
+        else:
+            return
 
-    elif option == '6':
-        menu_delete_base(dbname)
-    else:
-        # return menu principal
-        return
+    # return menu principal
+    return
+
 
 # find document
 def menu_find_document(dbname):
@@ -114,17 +116,16 @@ def menu_find_document(dbname):
         print(16*'-', 'MongoDOS', 16*'-', '\n')
 
         print('Informe o NOME da COLEÇÃO que deseja ACESSAR OU digite a letra "S" para voltar ao MENU anterior:')
-        option = input('Digite aqui (\U0001F449):')
+        collection = input('Digite aqui (\U0001F449):')
 
-        if option.lower() == 's':
+        if collection.lower() == 's':
             select_colection_valid = True
             return menu_list_collections_of_db(dbname)
 
-        elif option in funcMongoDB.list_collections_db(dbname):
+        elif collection in funcMongoDB.list_collections_db(dbname):
 
             option_valid = False
             while option_valid == False:
-                collection = option
                 cleanup_cmd()
                 print(16*'-', 'MongoDOS', 16*'-', '\n')
                 print(
@@ -208,11 +209,11 @@ def menu_find_document(dbname):
                                 print('\n')
 
                             print(
-                                25*'>', ' Aperte QUALQUER tecla para VOLTAR '.upper(), 25*'<')
+                                25*'>', ' Aperte ENTER tecla para VOLTAR '.upper(), 25*'<')
                             print(
-                                25*'>', ' Aperte QUALQUER tecla para VOLTAR '.upper(), 25*'<')
+                                25*'>', ' Aperte ENTER tecla para VOLTAR '.upper(), 25*'<')
                             print(
-                                25*'>', ' Aperte QUALQUER tecla para VOLTAR '.upper(), 25*'<')
+                                25*'>', ' Aperte ENTER tecla para VOLTAR '.upper(), 25*'<')
                             input('Digite aqui (\U0001F449):')
 
 # delete document menu
@@ -382,7 +383,7 @@ def menu_delete_base(dbname):
                 print(16*'-', 'MongoDOS', 16*'-', '\n')
                 print(f'Retornando ao MENU  {i} \U0000231B segundos')
                 sleep(1)
-            return
+            return 'DB_DELETED'
 
         elif option.lower() == 'n':
             delete_base_condition = True
