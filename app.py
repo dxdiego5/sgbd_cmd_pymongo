@@ -4,7 +4,7 @@ import menu
 app_build = True
 
 
-# intro_prsentation()
+intro_prsentation()
 
 while app_build == True:
 

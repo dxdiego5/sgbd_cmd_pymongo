@@ -46,11 +46,14 @@ manipulação de bancos de dados NoSQL com MongoDB.
 Para fazer o deploy desse projeto:
 
 ```bash
-    installe as ferramentas e biliotecas: 
-            (python, MongoDB, PyMongo) 
+    instale as ferramentas e biliotecas: 
+         - (python, MongoDB, PyMongo) 
     
-    execute no terminal o arquivo app.py
 
-    ... Agora é so usar a aplicação MongoDos...
+    - Start seu MongoDB primeiramente
+    - Abra o terminal vá ate a pasta do projeto
+    - Execute no terminal o arquivo app.py
+
+    ... Agora é so usar a aplicação MongoDos ...
 ```
 
