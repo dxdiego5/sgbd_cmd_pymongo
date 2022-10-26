@@ -37,6 +37,20 @@ manipulação de bancos de dados NoSQL com MongoDB.
 
 
 ## Licença
-
+ - Nome da aplicação: MongoDos 
 [MIT](https://choosealicense.com/licenses/mit/)
+
+
+## Deploy
+
+Para fazer o deploy desse projeto:
+
+```bash
+    installe as ferramentas e biliotecas: 
+            (python, MongoDB, PyMongo) 
+    
+    execute no terminal o arquivo app.py
+
+    ... Agora é so usar a aplicação MongoDos...
+```
 
